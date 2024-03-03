@@ -1,0 +1,63 @@
+Task
+Your task is to create a function that takes a (possibly nested) dictionary as input and returns a second "flattened" dictionary as an output.
+
+A "flattened" dictionary is a dictionary who's keys are a string of the nested keys for each dictionary "endpoint", seperated by a "." character. By this definition, a flattened dictionary cannot be nested (i.e. every "value" in the dictionary is not a dictionary itself).
+
+For instance, the following dictionary:
+
+{
+  "a": {
+      "b": {"c": 1, "d": 2},
+      "e": 3
+  },
+  "f": 4
+}
+would "flatten" into:
+
+{'a.b.c': 1, 'a.b.d': 2, 'a.e': 3, 'f': 4}
+Additionally, your function should be able to handle nested dictionaries where some of the keys are lists of dictionaries (these keys can occur at any level of nesting). In this case, the "key" is considered to be the index/position of each dictionary in the list, and this key should be enclosed in list brackets ('[' and ']').
+
+For instance, the following dictionary:
+
+d = {
+  "a": {
+      "b": {"c": 1, "d": 2},
+      "e": 3
+  },
+  "f": 4,
+  "g": [
+      {"h": 5},
+      {
+        "i": 6,
+        "j": [
+            {"k": 7},
+            {"l": 8}
+        ],
+      }
+  ]
+}
+would flatten to:
+
+{
+  'a.b.c': 1,
+  'a.b.d': 2,
+  'a.e': 3,
+  'f': 4,
+  'g[0].h': 5,
+  'g[1].i': 6,
+  'g[1].j[0].k': 7,
+  'g[1].j[1].l': 8}
+}
+Caveats
+The nested dictionary structure may contain empty-lists and empty-dictionaries, though these will always be at endpoints.
+All nested keys will be hashable, though the values at the end-points may not be, i.e.:
+{
+     'a': {
+        'b': []
+      }
+}
+is valid, because 'a' and 'b' are both hashable, and empty-lists are not but the empty-list is an endpoint. In this case, the above dictionary would flatten to become:
+{
+    'a.b': []
+}
+An empty dictionary flattens into another empty dictionary
